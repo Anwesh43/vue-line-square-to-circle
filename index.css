@@ -1,0 +1,10 @@
+.block {
+    position: absolute;
+    background: #0D47A1;
+}
+.line {
+    position: absolute;
+    background: #0D47A1;
+    height : 10px;
+    border-radius: 2px;
+}

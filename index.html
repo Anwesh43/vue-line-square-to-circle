@@ -1,0 +1,23 @@
+<html>
+    <head>
+        <link href = "index.css" rel = "stylesheet">
+    </head>
+    <body>
+        <div id = "app">
+            <line-square-to-circle>
+            </line-square-to-circle>
+        </div>
+        <script id = "squareToCircle" type = "text/template">
+            <div>
+                <div class = "block" @click = "start" :style = "{width : `${size}px`, height : `${size}px`, top : `${y}px`, left : `${x}px`, borderRadius : `${r}%`}">
+                </div>
+                <div class = "line" :style = "{left : `${x + size / 2 - l}px`, top : `${y + size / 2}px`, width : `${l}px`}">
+                </div>
+            </div>
+        </script>
+        <script src = "vue.js">
+        </script>
+        <script src = "index.js">
+        </script>
+    </body>
+</html>
