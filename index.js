@@ -96,3 +96,7 @@ Vue.component('line-square-to-circle', {
         }
     }
 })
+
+const vueInstance = new Vue({
+    el : '#app',
+})
