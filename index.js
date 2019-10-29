@@ -2,6 +2,7 @@ const w = window.innerWidth
 const h = window.innerHeight
 const scGap = 0.02
 const delay = 30
+const sizeFactor = 2.9
 
 class ScaleUtil {
 
@@ -60,3 +61,38 @@ class Animator {
         }
     }
 }
+
+const animator = new Animator()
+
+Vue.component('line-square-to-circle', {
+    template : '#squareToCircle',
+    data() {
+        const state = new State()
+        const size = Math.min(w, h) / sizeFactor
+        const x = w / 2
+        const y = h / 2
+        const r = 0
+        const l = 0
+        return {x, y, r, state, size, l}
+    },
+    methods : {
+        start() {
+            this.state.startUpdating(() => {
+                  animator.start(() => {
+                      this.move()
+                      this.state.update(() => {
+                          animator.stop()
+                          this.move()
+                      })
+                  })
+            })
+        },
+
+        move() {
+            const sf = ScaleUtil.sinify(this.state.scale)
+            this.x = w / 2 + w / 2 * sf
+            this.l = this.x - w  / 2
+            this.r = 50 * this.state.scale
+        }
+    }
+})
