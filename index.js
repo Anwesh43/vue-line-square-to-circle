@@ -1,8 +1,8 @@
 const w = window.innerWidth
 const h = window.innerHeight
 const scGap = 0.02
-const delay = 30
-const sizeFactor = 2.9
+const delay = 50
+const sizeFactor = 7
 
 class ScaleUtil {
 
@@ -12,6 +12,10 @@ class ScaleUtil {
 
     static update(scale, dir) {
         return scale + dir * scGap
+    }
+
+    static midSinify(scale) {
+        return Math.sin(scale * Math.PI / 2)
     }
 }
 
@@ -24,7 +28,7 @@ class State {
     }
 
     update(cb) {
-        this.scale = ScaleUtil.update(scale, dir)
+        this.scale = ScaleUtil.update(this.scale, this.dir)
         if (Math.abs(this.scale - this.prevScale) > 1) {
             this.scale = this.prevScale + this.dir
             this.dir = 0
@@ -69,8 +73,8 @@ Vue.component('line-square-to-circle', {
     data() {
         const state = new State()
         const size = Math.min(w, h) / sizeFactor
-        const x = w / 2
-        const y = h / 2
+        const x = w / 2 - size / 2
+        const y = h / 2 - size / 2
         const r = 0
         const l = 0
         return {x, y, r, state, size, l}
@@ -89,10 +93,12 @@ Vue.component('line-square-to-circle', {
         },
 
         move() {
+
             const sf = ScaleUtil.sinify(this.state.scale)
-            this.x = w / 2 + w / 2 * sf
-            this.l = this.x - w  / 2
-            this.r = 50 * this.state.scale
+            const change = w / 2 * sf
+            this.x = w / 2 - this.size / 2 + change
+            this.l = change
+            this.r = 50 * ScaleUtil.midSinify(this.state.scale)
         }
     }
 })
